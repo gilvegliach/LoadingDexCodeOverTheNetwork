@@ -1,7 +1,5 @@
 package it.gilvegliach.learning.networkdexloading;
 
-import android.support.annotation.NonNull;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.Closeable;
@@ -23,29 +21,20 @@ public class ColorizerDownloader {
     public ColorizerDownloader() {
     }
 
-    public void download(int id, File dex) {
-        String url = buildDexUrl(id);
-        downloadDexFile(url, dex);
-    }
-
-    private String buildDexUrl(int id) {
-        return String.format("http://10.0.3.2:8888/dex-%d.dex", id);
-    }
-
-    private void downloadDexFile(String dexUrl, File dest) {
+    public void download(String url, File dex) {
         BufferedInputStream bis = null;
         BufferedOutputStream bos = null;
 
         try {
-            URL url = new URL(dexUrl);
-            HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+            URL urlObject = new URL(url);
+            HttpURLConnection httpConn = (HttpURLConnection) urlObject.openConnection();
             int responseCode = httpConn.getResponseCode();
             if (responseCode != HttpURLConnection.HTTP_OK) {
                 throw new RuntimeException("Download didn't work, http status: " + responseCode);
             }
 
             bis = new BufferedInputStream(httpConn.getInputStream());
-            bos = new BufferedOutputStream(new FileOutputStream(dest));
+            bos = new BufferedOutputStream(new FileOutputStream(dex));
             copy(bis, bos);
         } catch (IOException e) {
             throw new RuntimeException(e);

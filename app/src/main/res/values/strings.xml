@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">NetworkDexLoading</string>
-    <string name="action_settings">Settings</string>
+    <string name="desc">Hostname server, e.g. http://10.0.3.2:8080 for Genymotion or
+        http://10.0.2.2:8080 for the Android emulator.
+        Start server with ./gradlew bootRun</string>
 </resources>

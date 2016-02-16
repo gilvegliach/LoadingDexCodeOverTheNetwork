@@ -1,6 +1,9 @@
 package it.gilvegliach.learning.networkdexloading;
 
+import android.util.Log;
+
 import java.io.File;
+import java.net.URL;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

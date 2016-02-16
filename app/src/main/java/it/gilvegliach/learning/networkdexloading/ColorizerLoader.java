@@ -2,6 +2,7 @@ package it.gilvegliach.learning.networkdexloading;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
 
 import java.io.File;
 
@@ -21,26 +22,33 @@ public class ColorizerLoader {
         this.linker = linker;
     }
 
-    public Colorizer load(int id) {
-        File dex = newDexFile(id);
-        downloader.download(id, dex);
+    public Colorizer load(String url) {
+        File dex = newDexFile(url);
+        downloader.download(url, dex);
 
-        String className = buildClassName(id);
+        String className = buildClassName(url);
         File codeCacheDir = getCodeCacheDir();
         ClassLoader classLoader = context.getClassLoader();
         return linker.link(className, dex, codeCacheDir, classLoader);
     }
 
-    private File newDexFile(int id) {
-        String name =  String.format("dex-%d.dex", id);
+    private File newDexFile(String url) {
+        String name = dexFileName(url);
         return new File(context.getDir("dex", Context.MODE_PRIVATE), name);
     }
 
-    private String buildClassName(int id) {
-        switch (id) {
-            case 1: return "it.gilvegliach.learning.networkdexloading.OneTwoSwapperColorizer";
-            case 2: return "it.gilvegliach.learning.networkdexloading.OneThreeSwapperColorizer";
-            default: throw new RuntimeException("Cannot build class name for id: " + id);
+    @NonNull
+    private String dexFileName(String url) {
+        int index = url.lastIndexOf('/') + 1;
+        return url.substring(index);
+    }
+
+    private String buildClassName(String url) {
+        String dex = dexFileName(url);
+        switch (dex) {
+            case "dex-1.dex": return "it.gilvegliach.learning.networkdexloading.OneTwoSwapperColorizer";
+            case "dex-2.dex": return "it.gilvegliach.learning.networkdexloading.OneThreeSwapperColorizer";
+            default: throw new RuntimeException("Cannot build class name for id: " + dex);
         }
     }
 
