@@ -15,7 +15,7 @@ task dex1(type: Exec, dependsOn: classes) {
 
 task dex2(type: Exec, dependsOn: classes) {
     workingDir 'build/classes/main'
-    commandLine 'dx', '--dex', '--output=dex-2.dex', 'it/gilvegliach/learning/networkdexloading/OneThreeSwapperColorizer.class'
+    commandLine dxCommand, '--dex', '--output=dex-2.dex', 'it/gilvegliach/learning/networkdexloading/OneThreeSwapperColorizer.class'
 }
 
 task dex(dependsOn: [dex1, dex2])
