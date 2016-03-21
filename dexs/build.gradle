@@ -9,7 +9,6 @@ def dxCommand = 'dx'
 
 task dex1(type: Exec, dependsOn: classes) {
     workingDir 'build/classes/main'
-
     commandLine dxCommand, '--dex', '--output=dex-1.dex', 'it/gilvegliach/learning/networkdexloading/OneTwoSwapperColorizer.class'
 }
 
